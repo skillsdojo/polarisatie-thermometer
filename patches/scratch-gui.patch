@@ -17,11 +17,11 @@ index ba18b91..e316f38 100644
  
  export default [
 +    {
-+        name: 'Your Extension',
++        name: 'Polarisatie thermometer',
 +        extensionId: 'yourScratchExtension',
 +        iconURL: yourExtensionIconURL,
 +        insetIconURL: yourExtensionInsetIconURL,
-+        description: 'Your custom Scratch extension',
++        description: 'Test of jouw tekst polariserend is',
 +        featured: true,
 +        disabled: false
 +    },

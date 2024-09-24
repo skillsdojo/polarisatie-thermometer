@@ -17,7 +17,7 @@ class Scratch3YourExtension {
             id: 'polarisatieModel',
 
             // name that will be displayed in the Scratch UI
-            name: 'Model',
+            name: 'Thermo',
 
             // colours to use for your extension blocks
             color1: '#88409A',
