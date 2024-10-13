@@ -24,7 +24,7 @@ class Scratch3PolarisatieThermometer {
                     arguments: {
                         TEXT: {
                             type: ArgumentType.STRING,
-                            defaultValue: 'Voer je zin in'
+                            defaultValue: 'Voer je zin in...'
                         }
                     }
                 },
@@ -35,7 +35,7 @@ class Scratch3PolarisatieThermometer {
                     arguments: {
                         TEXT: {
                             type: ArgumentType.STRING,
-                            defaultValue: 'Voer je zin in'
+                            defaultValue: 'Voer je zin in...'
                         }
                     }
                 }
