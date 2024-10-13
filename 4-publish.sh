@@ -26,15 +26,28 @@ echo "Creating and switching to a new gh-pages branch"
 git checkout --orphan gh-pages
 git rm -rf .
 
-echo "Preparing a publish folder"
-mkdir -p scratch
+echo "Copying the Scratch build to the root of gh-pages"
+cp -rf $SCRATCH_SRC_HOME/scratch-gui/build/* .
 
-echo "Copying the Scratch build to the publish folder"
-cp -rf $SCRATCH_SRC_HOME/scratch-gui/build/* ./scratch/
+# Create an index.html file that redirects to the Scratch editor
+echo "Creating redirect index.html"
+cat > index.html << EOL
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0;url=scratch/index.html">
+    <title>Redirecting to Scratch Editor</title>
+</head>
+<body>
+    <p>If you are not redirected automatically, follow this <a href="scratch/index.html">link to the Scratch editor</a>.</p>
+</body>
+</html>
+EOL
 
 echo "Adding and committing changes"
-git add scratch
-git commit -m "Update Scratch build"
+git add .
+git commit -m "Update Scratch build and add redirect"
 
 echo "Pushing to gh-pages branch"
 git push origin gh-pages --force
@@ -47,5 +60,6 @@ git branch -D gh-pages
 
 echo "Publishing complete!"
 echo "Your Scratch fork should now be available at:"
-echo "https://<YOUR-USERNAME>.github.io/<REPO-NAME>/scratch/"
+echo "https://<YOUR-USERNAME>.github.io/<REPO-NAME>/"
+echo "This will redirect to https://<YOUR-USERNAME>.github.io/<REPO-NAME>/scratch/"
 echo "Note: It might take a few minutes for the changes to propagate."
