@@ -22,8 +22,8 @@ fi
 echo "Commit any changes"
 git add your-scratch-extension
 git add dependencies
-git commit -m "Update"
-git push origin master
+git commit -m "Update" || true
+git push origin master || true
 
 echo "Building the Scratch fork"
 ./2-build.sh
