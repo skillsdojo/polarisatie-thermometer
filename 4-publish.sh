@@ -29,25 +29,9 @@ git rm -rf .
 echo "Copying the Scratch build to the root of gh-pages"
 cp -rf $SCRATCH_SRC_HOME/scratch-gui/build/* .
 
-# Create an index.html file that redirects to the Scratch editor
-echo "Creating redirect index.html"
-cat > index.html << EOL
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0;url=scratch/index.html">
-    <title>Redirecting to Scratch Editor</title>
-</head>
-<body>
-    <p>If you are not redirected automatically, follow this <a href="scratch/index.html">link to the Scratch editor</a>.</p>
-</body>
-</html>
-EOL
-
 echo "Adding and committing changes"
 git add .
-git commit -m "Update Scratch build and add redirect"
+git commit -m "Update Scratch build"
 
 echo "Pushing to gh-pages branch"
 git push origin gh-pages --force
@@ -59,7 +43,6 @@ echo "Cleaning up"
 git branch -D gh-pages
 
 echo "Publishing complete!"
-echo "Your Scratch fork should now be available at:"
+echo "Your Scratch interface should now be available at:"
 echo "https://<YOUR-USERNAME>.github.io/<REPO-NAME>/"
-echo "This will redirect to https://<YOUR-USERNAME>.github.io/<REPO-NAME>/scratch/"
 echo "Note: It might take a few minutes for the changes to propagate."
