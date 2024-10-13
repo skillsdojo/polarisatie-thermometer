@@ -3,6 +3,7 @@ const ArgumentType = require('../../extension-support/argument-type');
 const TargetType = require('../../extension-support/target-type');
 
 class Scratch3PolarisatieThermometer {
+    // Using hugging face api
     constructor (runtime) {
         this.runtime = runtime;
         this.apiUrl = 'https://pablofr-api-polarization-thermometer.hf.space/gradio_api/call/predict';
