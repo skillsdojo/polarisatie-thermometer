@@ -19,30 +19,37 @@ if [[ $BASH_SOURCE = */* ]]; then
   cd -- "${BASH_SOURCE%/*}/" || exit
 fi
 
+echo "Commit any changes"
+git add your-scratch-extension
+git add dependencies
+git commit -m "Update"
+git push origin master
+
 echo "Building the Scratch fork"
 ./2-build.sh
 
-echo "Creating and switching to a new gh-pages branch"
-git checkout --orphan gh-pages
-git rm -rf .
+echo "Preparing a gh-pages branch"
+DEVBRANCH=$(git rev-parse --abbrev-ref HEAD)
+if git rev-parse --verify gh-pages >/dev/null 2>&1
+then
+  git checkout gh-pages
+else
+  git checkout -b gh-pages
+fi
 
-echo "Copying the Scratch build to the root of gh-pages"
-cp -rf $SCRATCH_SRC_HOME/scratch-gui/build/* .
+echo "Preparing a publish folder"
+if [ -d "scratch" ]
+then
+  rm -rf ./scratch/*
+else
+  mkdir scratch
+fi
 
-echo "Adding and committing changes"
-git add .
-git commit -m "Update Scratch build"
+echo "Publishing the Scratch fork"
+cp -rf $SCRATCH_SRC_HOME/scratch-gui/build/* ./scratch/.
+git add scratch
+git commit -m "Update"
+git push origin gh-pages
 
-echo "Pushing to gh-pages branch"
-git push origin gh-pages --force
-
-echo "Returning to original branch"
-git checkout -
-
-echo "Cleaning up"
-git branch -D gh-pages
-
-echo "Publishing complete!"
-echo "Your Scratch interface should now be available at:"
-echo "https://<YOUR-USERNAME>.github.io/<REPO-NAME>/"
-echo "Note: It might take a few minutes for the changes to propagate."
+echo "Returning to dev branch"
+git checkout $DEVBRANCH
