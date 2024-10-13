@@ -19,35 +19,33 @@ if [[ $BASH_SOURCE = */* ]]; then
   cd -- "${BASH_SOURCE%/*}/" || exit
 fi
 
-echo "Commit any changes"
-git add your-scratch-extension
-git add dependencies
-git commit -m "Update" || true
-git push origin master || true
-
 echo "Building the Scratch fork"
 ./2-build.sh
 
-echo "Preparing gh-pages branch"
-git checkout gh-pages || git checkout -b gh-pages
+echo "Creating and switching to a new gh-pages branch"
+git checkout --orphan gh-pages
+git rm -rf .
 
 echo "Preparing a publish folder"
-if [ -d "scratch" ]; then
-  rm -rf ./scratch/*
-else
-  mkdir scratch
-fi
+mkdir -p scratch
 
-echo "Publishing the Scratch fork"
-cp -rf $SCRATCH_SRC_HOME/scratch-gui/build/* ./scratch/.
+echo "Copying the Scratch build to the publish folder"
+cp -rf $SCRATCH_SRC_HOME/scratch-gui/build/* ./scratch/
 
-echo "Committing and pushing changes"
-git add .
-git commit -m "Update Scratch build" || true
-git push origin gh-pages
+echo "Adding and committing changes"
+git add scratch
+git commit -m "Update Scratch build"
+
+echo "Pushing to gh-pages branch"
+git push origin gh-pages --force
 
 echo "Returning to original branch"
 git checkout -
 
-echo "Your extension is now available in the gh-pages branch."
-echo "It should be accessible at: https://<USERNAME>.github.io/<REPO-NAME>/scratch/index.html"
+echo "Cleaning up"
+git branch -D gh-pages
+
+echo "Publishing complete!"
+echo "Your Scratch fork should now be available at:"
+echo "https://<YOUR-USERNAME>.github.io/<REPO-NAME>/scratch/"
+echo "Note: It might take a few minutes for the changes to propagate."
